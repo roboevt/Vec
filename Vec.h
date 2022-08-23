@@ -61,9 +61,8 @@ public:
             components[i]=input[i];
         }
     }
-    Vec(std::initializer_list<float> components) {
-        static_assert(components.size() == N);
-        std::copy(components.begin(), components.end(), this->components);
+    Vec(const float (&componentsIn)[N]) {
+        std::copy(std::begin(componentsIn), std::end(componentsIn), this->components);
     }
 };
 
