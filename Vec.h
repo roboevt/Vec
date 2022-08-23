@@ -5,7 +5,7 @@ template<int N> class Vec {
 protected:
     float components[N];
 public:
-    Vec operator+(const Vec& other) {
+    Vec operator+(const Vec& other) const {
         float next[N];
         for(int i = 0; i < N; i++) {
             next[i] = components[i] + other[i];
@@ -14,7 +14,7 @@ public:
     }
     void operator+=(const Vec& other) {*this = *this + other;}
 
-    Vec operator-(const Vec& other) {
+    Vec operator-(const Vec& other) const {
         float next[N];
         for(int i = 0; i < N; i++) {
             next[i] = components[i] + other[i];
@@ -23,7 +23,7 @@ public:
     }
     void operator-=(const Vec& other) {*this = *this - other;}
 
-    float operator*(const Vec& other) {  // dot product
+    float operator*(const Vec& other) const {  // dot product
     float sum = 0;
         for(int i = 0; i < N; i++) {
             sum += components[i] * other.components[i];
@@ -31,7 +31,7 @@ public:
         return sum;
     }
 
-    Vec operator*(float scale) {
+    Vec operator*(float scale) const {
         float next[N];
         for(int i = 0; i < N; i++) {
             next[i] = components[i] * scale;
@@ -40,15 +40,15 @@ public:
     }
     void operator*=(float scale) {*this = *this * scale;}
 
-    Vec operator/(float scale) {
+    Vec operator/(float scale) const {
         return *this * (1.0f / scale);
     }
     void operator/=(float scale) {*this = *this / scale;}
 
-    float& operator[](unsigned int index) {return components[index];}
-    float magnitudeSquared() {return (*this) * (*this);}
-    float magnitude() {return sqrt(this->magnitudeSquared());}
-    Vec normalized() {return *this / magnitude();}
+    float operator[](unsigned int index) const {return components[index];}
+    float magnitudeSquared() const {return (*this) * (*this);}
+    float magnitude() const {return sqrt(this->magnitudeSquared());}
+    Vec normalized() const {return *this / magnitude();}
     void normalize() {*this = *this / magnitude();}
 
     Vec() {
@@ -62,6 +62,7 @@ public:
         }
     }
     Vec(std::initializer_list<float> components) {
+        static_assert(components.size() == N);
         std::copy(components.begin(), components.end(), this->components);
     }
 };
