@@ -61,7 +61,7 @@ public:
             components[i]=input[i];
         }
     }
-    Vec(const float (&componentsIn)[N]) {
+    Vec(std::initializer_list<float> componentsIn) {
         std::copy(std::begin(componentsIn), std::end(componentsIn), this->components);
     }
 };
